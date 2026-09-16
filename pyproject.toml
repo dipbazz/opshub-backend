@@ -49,3 +49,9 @@ exclude = ["migrations/"]
 
 [tool.django-stubs]
 django_settings_module = "config.settings.test"
+
+[[tool.mypy.overrides]]
+# python-decouple ships no stubs and no types-python-decouple package exists —
+# suppress just this module rather than `# type: ignore`-ing every call site.
+module = "decouple"
+ignore_missing_imports = true
