@@ -121,7 +121,7 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "AUTH_HEADER_TYPES": ("Bearer",),
     # Overridden in Day 2 with a custom serializer that also embeds
-    # tenant_id/role claims — see tenants/serializers.py.
+    # tenant_id/role claims — see tenants/auth.py.
 }
 
 # CORS: dev.py / prod.py each set CORS_ALLOWED_ORIGINS explicitly.
