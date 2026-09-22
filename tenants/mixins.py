@@ -15,6 +15,6 @@ else:
 class TenantScopedQuerySetMixin(_Base):
     def get_queryset(self) -> QuerySet[Any]:
         if not isinstance(self.request.user, User):
-            raise TypeError("TenantScopedQuerySetMixin requires an authenticated User")
+            raise TypeError(f"{type(self).__name__} requires an authenticated User")
 
         return super().get_queryset().filter(tenant=self.request.user.tenant_id)
