@@ -56,3 +56,20 @@ django_settings_module = "config.settings.test"
 # suppress just this module rather than `# type: ignore`-ing every call site.
 module = "decouple"
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# factory_boy ships py.typed but its own __init__.py re-exports (Faker,
+# Sequence, SubFactory, ...) without __all__, which strict mode's
+# implicit_reexport=False rejects even though they're the library's real
+# public API — this tells mypy to trust factory's exports as intentional.
+module = "factory"
+implicit_reexport = true
+
+[[tool.mypy.overrides]]
+# factory_boy's declaration classes (Faker, Sequence, SubFactory, ...) are
+# themselves untyped internally despite py.typed, so calling them trips
+# disallow_untyped_calls in every *.tests.factories module. Scoped to just
+# those modules, not project-wide, so untyped-call checking still applies
+# to actual domain code.
+module = "*.tests.factories"
+disable_error_code = ["no-untyped-call"]
